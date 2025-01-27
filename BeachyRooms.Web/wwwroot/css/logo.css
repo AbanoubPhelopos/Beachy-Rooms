@@ -1,0 +1,105 @@
+/* logo.css */
+
+/* Logo Styles */
+.logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.icon {
+    position: relative;
+    width: 35px; /* Adjusted size */
+    height: 35px;
+}
+
+.wave {
+    position: absolute;
+    width: 25px;
+    height: 15px;
+    background: #00bcd4; /* Turquoise color */
+    border-radius: 50% 50% 0 0;
+    transform: rotate(-45deg) translate(-6.5px, 6.5px);
+    overflow: hidden;
+}
+
+.sun {
+    position: absolute;
+    top: 3px;
+    left: 15.5px;
+    width: 9.5px;
+    height: 9.5px;
+    background: radial-gradient(circle at center, #ffd54f 0%, #ffca28 60%, #ffb300 100%);
+    border-radius: 50%;
+    box-shadow: 0 0 4.5px rgba(255, 193, 7, 0.6);
+}
+
+.letter-b {
+    position: absolute;
+    font-size: 22.5px;
+    font-weight: bold;
+    color: transparent;
+    background: linear-gradient(to right, #fffb00, #d47800);
+    -webkit-background-clip: text;
+    background-clip: text;
+    top: 0;
+    left: 2.5px;
+}
+
+/* Remove logo-text styles since it's no longer used */
+
+/* Navbar Customization */
+.navbar {
+    border-bottom: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar .nav-link {
+    color: #0077b6;
+}
+
+.navbar .nav-link:hover {
+    color: #005f86;
+}
+
+.navbar-toggler {
+    border-color: #0077b6;
+}
+
+.navbar-toggler-icon {
+    background-image: none; /* Remove custom icon */
+}
+
+.navbar-toggler-icon::before {
+    content: "";
+    display: block;
+    width: 22px;
+    height: 2px;
+    background-color: #0077b6;
+    margin: 5px 0;
+    box-shadow: 0 6px 0 0 #0077b6, 0 12px 0 0 #0077b6;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 576px) {
+    .icon {
+        width: 20px; /* Further reduced size for mobile */
+        height: 20px;
+    }
+    .wave {
+        width: 20px;
+        height: 12px;
+        transform: rotate(-45deg) translate(-5px, 5px);
+    }
+    .sun {
+        top: 2px;
+        left: 12.5px;
+        width: 7.5px;
+        height: 7.5px;
+    }
+    .letter-b {
+        font-size: 18px;
+        left: 2px;
+    }
+}
