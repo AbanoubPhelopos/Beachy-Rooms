@@ -11,43 +11,68 @@
     <div class="card-body border p-4">
         <form method="post" class="row">
             <div class="p-3">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="HotelName" class="form-control border shadow" />
-                    <label asp-for="HotelName" class="ms-2"></label>
+                    <input asp-for="HotelName" class="form-control border shadow" placeholder="Hotel Name"/>
+                    <label asp-for="HotelName"></label>
+                    <span asp-validation-for="HotelName" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="RoomNumber" class="form-control border shadow" />
-                    <label asp-for="RoomNumber" class="ms-2"></label>
+                    <input asp-for="RoomNumber" class="form-control border shadow" type="number" placeholder="Room Number"/>
+                    <label asp-for="RoomNumber"></label>
+                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
                 </div>
+
+                <!-- Country Dropdown -->
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="Country" class="form-control border shadow" />
-                    <label asp-for="Country" class="ms-2"></label>
+                    <select asp-for="Country" class="form-select border shadow" id="CountrySelect">
+                        <option value="">Select Country</option>
+                    </select>
+                    <label asp-for="Country"></label>
+                    <span asp-validation-for="Country" class="text-danger"></span>
                 </div>
+
+                <!-- Governorate Dropdown -->
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="City" class="form-control border shadow" />
-                    <label asp-for="City" class="ms-2"></label>
+                    <select asp-for="City" class="form-select border shadow" id="StateSelect">
+                        <option value="">Select Governorate</option>
+                    </select>
+                    <label asp-for="City">Governorate</label>
+                    <span asp-validation-for="City" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="Description" class="form-control border shadow" />
-                    <label asp-for="Description" class="ms-2"></label>
+                    <textarea asp-for="Description" class="form-control border shadow" placeholder="Description" style="height: 100px;"></textarea>
+                    <label asp-for="Description"></label>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="Price" class="form-control border shadow" />
-                    <label asp-for="Price" class="ms-2"></label>
+                    <input asp-for="Price" class="form-control border shadow" type="number" step="0.01" placeholder="Price per night"/>
+                    <label asp-for="Price"></label>
+                    <span asp-validation-for="Price" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="Sqft" class="form-control border shadow" />
-                    <label asp-for="Sqft" class="ms-2"></label>
+                    <input asp-for="Sqft" class="form-control border shadow" type="number" placeholder="Square Feet"/>
+                    <label asp-for="Sqft"></label>
+                    <span asp-validation-for="Sqft" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="Occupancy" class="form-control border shadow" />
-                    <label asp-for="Occupancy" class="ms-2"></label>
+                    <input asp-for="Occupancy" class="form-control border shadow" type="number" placeholder="Occupancy"/>
+                    <label asp-for="Occupancy"></label>
+                    <span asp-validation-for="Occupancy" class="text-danger"></span>
                 </div>
+
                 <div class="form-floating py-1 col-12">
-                    <input asp-for="ImageUrl" class="form-control border shadow" />
-                    <label asp-for="ImageUrl" class="ms-2"></label>
+                    <input asp-for="ImageUrl" class="form-control border shadow" type="url" placeholder="Image URL"/>
+                    <label asp-for="ImageUrl"></label>
+                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
                 </div>
-                <div class="row pt-2">
+
+                 <div class="row pt-2">
                     <div class="col-6 col-md-3">
                         <button type="submit" class="btn btn-success w-100">
                             <i class="bi bi-check-circle"></i> Create
@@ -63,3 +88,70 @@
         </form>
     </div>
 </div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Fetch and populate countries
+            $.get('https://restcountries.com/v3.1/all', function (countries) {
+                var countrySelect = $('#CountrySelect');
+                countrySelect.empty();
+                countrySelect.append('<option value="">Select Country</option>');
+
+                // Sort countries alphabetically
+                countries.sort(function (a, b) {
+                    return a.name.common.localeCompare(b.name.common);
+                });
+
+                $.each(countries, function (index, country) {
+                    countrySelect.append('<option value="' + country.name.common + '">' + country.name.common + '</option>');
+                });
+            });
+
+            // Fetch states/governorates when a country is selected
+            $('#CountrySelect').change(function () {
+                var countryName = $(this).val();
+                var stateSelect = $('#StateSelect');
+                stateSelect.empty();
+                stateSelect.append('<option value="">Loading governorates...</option>');
+
+                if (countryName) {
+                    $.ajax({
+                        url: 'https://countriesnow.space/api/v0.1/countries/states',
+                        type: 'POST',
+                        data: JSON.stringify({ country: countryName }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                            stateSelect.empty();
+                            if (response && response.data && response.data.states && response.data.states.length > 0) {
+                                stateSelect.append('<option value="">Select Governorate</option>');
+                                
+                                // Sort states alphabetically
+                                response.data.states.sort(function(a, b) {
+                                    return a.name.localeCompare(b.name);
+                                });
+                                
+                                $.each(response.data.states, function (index, state) {
+                                    stateSelect.append('<option value="' + state.name + '">' + state.name + '</option>');
+                                });
+                            } else {
+                                stateSelect.append('<option value="">No governorates available</option>');
+                            }
+                        },
+                        error: function () {
+                            stateSelect.empty();
+                            stateSelect.append('<option value="">Error fetching governorates</option>');
+                        }
+                    });
+                } else {
+                    stateSelect.empty();
+                    stateSelect.append('<option value="">Select Governorate</option>');
+                }
+            });
+        });
+    </script>
+}
