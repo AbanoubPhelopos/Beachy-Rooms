@@ -12,4 +12,9 @@ public class RoomController(ApplicationDbContext context) : Controller
         var rooms = _context.Rooms.ToList();
         return View(rooms);
     }
+
+    public IActionResult Create()
+    {
+        return View();
+    }
 }
