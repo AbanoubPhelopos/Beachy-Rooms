@@ -4,17 +4,16 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"]</title>
-    <link rel="stylesheet" href="~/css/bootstrap.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/logo.css" asp-append-version="true" />
 </head>
-<body>
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
-        <div class="container-fluid">
-            <!-- Logo without the "Beachy Rooms" text -->
-            <a class="navbar-brand d-flex align-items-center me-2" asp-area="" asp-controller="Home" asp-action="Index">
+<body class="bg-gray-100">
+<header class="bg-white shadow-md">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo -->
+            <a class="flex items-center space-x-2" asp-area="" asp-controller="Home" asp-action="Index">
                 <div class="logo">
                     <div class="icon">
                         <div class="wave"></div>
@@ -22,38 +21,54 @@
                         <span class="letter-b">B</span>
                     </div>
                 </div>
+                <span class="text-xl font-bold text-gray-800">Beachy Rooms</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+
+            <!-- Mobile Menu Button -->
+            <button class="lg:hidden p-2 text-gray-800 hover:text-gray-600 focus:outline-none" aria-label="Toggle menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
             </button>
-            <!-- Navigation links aligned to the left beside the logo -->
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-controller="Room" asp-action="Index">Rooms</a>
-                    </li>
-                    
-                </ul>
+
+            <!-- Navigation Links -->
+            <div class="hidden lg:flex lg:items-center lg:space-x-6">
+                <a class="text-gray-800 hover:text-gray-600 font-medium" asp-controller="Room" asp-action="Index">Rooms</a>
+                <a class="text-gray-800 hover:text-gray-600 font-medium" asp-controller="Home" asp-action="Privacy">Privacy</a>
             </div>
+        </div>
+
+        <!-- Mobile Menu (Hidden by default) -->
+        <div class="lg:hidden hidden mt-2">
+            <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Room" asp-action="Index">Rooms</a>
+            <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </nav>
 </header>
-<div class="container">
-    <main role="main" class="pb-3">
+
+<div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main role="main">
         @RenderBody()
     </main>
 </div>
 
-<footer class="border-top footer text-muted">
-    <div class="container">
+<footer class="bg-white border-t border-gray-200 mt-8">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-gray-600">
         &copy; @DateTime.Now.Year - BeachyRooms.Web -
-        <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <a class="text-blue-600 hover:text-blue-800" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
     </div>
 </footer>
+
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" asp-append-version="true"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
+
+<!-- Add JavaScript for mobile menu toggle -->
+<script>
+    document.querySelector('button[aria-label="Toggle menu"]').addEventListener('click', function () {
+        const mobileMenu = document.querySelector('.lg\\:hidden.hidden');
+        mobileMenu.classList.toggle('hidden');
+    });
+</script>
 </body>
 </html>

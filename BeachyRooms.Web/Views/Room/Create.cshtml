@@ -1,88 +1,98 @@
 @model BeachyRooms.Domain.Entities.Room
 
-<div class="w-100 card border-0 p-4">
-    <div class="card-header bg-success bg-gradient ml-0 py-3">
-        <div class="row">
-            <div class="col-12 text-center">
-                <h2 class="text-white py-2">Create Villa</h2>
-            </div>
-        </div>
+<div class="w-full bg-white border border-gray-200 rounded-lg shadow p-4">
+    <div class="bg-green-500 bg-gradient-to-r from-green-500 to-green-600 py-3 rounded-t-lg">
+        <h2 class="text-white py-2 text-center text-3xl">Create Room</h2>
     </div>
-    <div class="card-body border p-4">
-        <form method="post" class="row">
-            <div class="p-3">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="p-4 border-t border-gray-200">
+        <form method="post" class="space-y-6">
+            <div>
+                <div asp-validation-summary="ModelOnly" class="text-red-500"></div>
+                <!-- Use flex-col with gap-2 for form fields -->
+                <div class="flex flex-col gap-1">
 
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="HotelName" class="form-control border shadow" placeholder="Hotel Name"/>
-                    <label asp-for="HotelName"></label>
-                    <span asp-validation-for="HotelName" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="RoomNumber" class="form-control border shadow" type="number" placeholder="Room Number"/>
-                    <label asp-for="RoomNumber"></label>
-                    <span asp-validation-for="RoomNumber" class="text-danger"></span>
-                </div>
-
-                <!-- Country Dropdown -->
-                <div class="form-floating py-1 col-12">
-                    <select asp-for="Country" class="form-select border shadow" id="CountrySelect">
-                        <option value="">Select Country</option>
-                    </select>
-                    <label asp-for="Country"></label>
-                    <span asp-validation-for="Country" class="text-danger"></span>
-                </div>
-
-                <!-- Governorate Dropdown -->
-                <div class="form-floating py-1 col-12">
-                    <select asp-for="City" class="form-select border shadow" id="StateSelect">
-                        <option value="">Select Governorate</option>
-                    </select>
-                    <label asp-for="City">Governorate</label>
-                    <span asp-validation-for="City" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <textarea asp-for="Description" class="form-control border shadow" placeholder="Description" style="height: 100px;"></textarea>
-                    <label asp-for="Description"></label>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Price" class="form-control border shadow" type="number" step="0.01" placeholder="Price per night"/>
-                    <label asp-for="Price"></label>
-                    <span asp-validation-for="Price" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Sqft" class="form-control border shadow" type="number" placeholder="Square Feet"/>
-                    <label asp-for="Sqft"></label>
-                    <span asp-validation-for="Sqft" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="Occupancy" class="form-control border shadow" type="number" placeholder="Occupancy"/>
-                    <label asp-for="Occupancy"></label>
-                    <span asp-validation-for="Occupancy" class="text-danger"></span>
-                </div>
-
-                <div class="form-floating py-1 col-12">
-                    <input asp-for="ImageUrl" class="form-control border shadow" type="url" placeholder="Image URL"/>
-                    <label asp-for="ImageUrl"></label>
-                    <span asp-validation-for="ImageUrl" class="text-danger"></span>
-                </div>
-
-                 <div class="row pt-2">
-                    <div class="col-6 col-md-3">
-                        <button type="submit" class="btn btn-success w-100">
-                            <i class="bi bi-check-circle"></i> Create
-                        </button>
+                    <!-- Hotel Name -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="HotelName" class="text-gray-700 font-medium">Hotel Name</label>
+                        <input asp-for="HotelName" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="HotelName" class="text-red-500"></span>
                     </div>
-                    <div class="col-6 col-md-3">
-                        <a asp-controller="Room" asp-action="Index" class="btn btn-secondary w-100">
-                            <i class="bi bi-x-circle"></i> Cancel
-                        </a>
+
+                    <!-- Room Number -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="RoomNumber" class="text-gray-700 font-medium">Room Number</label>
+                        <input asp-for="RoomNumber" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="RoomNumber" class="text-red-500"></span>
                     </div>
+
+                    <!-- Country Dropdown -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="Country" class="text-gray-700 font-medium">Country</label>
+                        <select asp-for="Country" class="w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" id="CountrySelect">
+                            <option value="">Select Country</option>
+                        </select>
+                        <span asp-validation-for="Country" class="text-red-500"></span>
+                    </div>
+
+                    <!-- Governorate Dropdown -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="City" class="text-gray-700 font-medium">Governorate</label>
+                        <select asp-for="City" class="w-full px-4 py-2 border border-gray-300 bg-white rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" id="StateSelect">
+                            <option value="">Select Governorate</option>
+                        </select>
+                        <span asp-validation-for="City" class="text-red-500"></span>
+                    </div>
+
+                    <!-- Description -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="Description" class="text-gray-700 font-medium">Description</label>
+                        <textarea asp-for="Description" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" style="height: 100px;"></textarea>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="Price" class="text-gray-700 font-medium">Price per night</label>
+                        <input asp-for="Price" type="number" step="0.01" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="Price" class="text-red-500"></span>
+                    </div>
+
+                    <!-- Square Feet -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="Sqft" class="text-gray-700 font-medium">Square Feet</label>
+                        <input asp-for="Sqft" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="Sqft" class="text-red-500"></span>
+                    </div>
+
+                    <!-- Occupancy -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="Occupancy" class="text-gray-700 font-medium">Occupancy</label>
+                        <input asp-for="Occupancy" type="number" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="Occupancy" class="text-red-500"></span>
+                    </div>
+
+                    <!-- Image URL -->
+                    <div class="flex flex-col gap-1">
+                        <label asp-for="ImageUrl" class="text-gray-700 font-medium">Image URL</label>
+                        <input asp-for="ImageUrl" type="url" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring focus:ring-blue-200" />
+                        <span asp-validation-for="ImageUrl" class="text-red-500"></span>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex flex-wrap gap-2 pt-4">
+                    <button type="submit" class="flex items-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded hover:scale-105 hover:bg-green-300 hover:cursor-pointer duration-300 transition-all">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M16.707 5.293a1 1 0 010 1.414L9 14.414l-3.707-3.707a1 1 0 10-1.414 1.414L9 17.242l8.121-8.121a1 1 0 00-1.414-1.414z" />
+                        </svg>
+                        Create
+                    </button>
+                    <a asp-controller="Room" asp-action="Index" class="flex items-center bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
+                        <!-- X icon SVG -->
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 9.293l6.293-6.293a1 1 0 111.414 1.414L11.414 10l6.293 6.293a1 1 0 11-1.414 1.414L10 11.414l-6.293 6.293a1 1 0 01-1.414-1.414l6.293-6.293L2.293 4.414A1 1 0 013.707 3l6.293 6.293z" />
+                        </svg>
+                        Cancel
+                    </a>
                 </div>
             </div>
         </form>
@@ -90,68 +100,68 @@
 </div>
 
 @section Scripts{
-    <partial name="_ValidationScriptsPartial" />
+<partial name="_ValidationScriptsPartial" />
 
-    <!-- Include jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Fetch and populate countries
-            $.get('https://restcountries.com/v3.1/all', function (countries) {
-                var countrySelect = $('#CountrySelect');
-                countrySelect.empty();
-                countrySelect.append('<option value="">Select Country</option>');
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Fetch and populate countries
+        $.get('https://restcountries.com/v3.1/all', function (countries) {
+            var countrySelect = $('#CountrySelect');
+            countrySelect.empty();
+            countrySelect.append('<option value="">Select Country</option>');
 
-                // Sort countries alphabetically
-                countries.sort(function (a, b) {
-                    return a.name.common.localeCompare(b.name.common);
-                });
-
-                $.each(countries, function (index, country) {
-                    countrySelect.append('<option value="' + country.name.common + '">' + country.name.common + '</option>');
-                });
+            // Sort countries alphabetically
+            countries.sort(function (a, b) {
+                return a.name.common.localeCompare(b.name.common);
             });
 
-            // Fetch states/governorates when a country is selected
-            $('#CountrySelect').change(function () {
-                var countryName = $(this).val();
-                var stateSelect = $('#StateSelect');
-                stateSelect.empty();
-                stateSelect.append('<option value="">Loading governorates...</option>');
-
-                if (countryName) {
-                    $.ajax({
-                        url: 'https://countriesnow.space/api/v0.1/countries/states',
-                        type: 'POST',
-                        data: JSON.stringify({ country: countryName }),
-                        contentType: 'application/json',
-                        success: function (response) {
-                            stateSelect.empty();
-                            if (response && response.data && response.data.states && response.data.states.length > 0) {
-                                stateSelect.append('<option value="">Select Governorate</option>');
-                                
-                                // Sort states alphabetically
-                                response.data.states.sort(function(a, b) {
-                                    return a.name.localeCompare(b.name);
-                                });
-                                
-                                $.each(response.data.states, function (index, state) {
-                                    stateSelect.append('<option value="' + state.name + '">' + state.name + '</option>');
-                                });
-                            } else {
-                                stateSelect.append('<option value="">No governorates available</option>');
-                            }
-                        },
-                        error: function () {
-                            stateSelect.empty();
-                            stateSelect.append('<option value="">Error fetching governorates</option>');
-                        }
-                    });
-                } else {
-                    stateSelect.empty();
-                    stateSelect.append('<option value="">Select Governorate</option>');
-                }
+            $.each(countries, function (index, country) {
+                countrySelect.append('<option value="' + country.name.common + '">' + country.name.common + '</option>');
             });
         });
-    </script>
+
+        // Fetch states/governorates when a country is selected
+        $('#CountrySelect').change(function () {
+            var countryName = $(this).val();
+            var stateSelect = $('#StateSelect');
+            stateSelect.empty();
+            stateSelect.append('<option value="">Loading governorates...</option>');
+
+            if (countryName) {
+                $.ajax({
+                    url: 'https://countriesnow.space/api/v0.1/countries/states',
+                    type: 'POST',
+                    data: JSON.stringify({ country: countryName }),
+                    contentType: 'application/json',
+                    success: function (response) {
+                        stateSelect.empty();
+                        if (response && response.data && response.data.states && response.data.states.length > 0) {
+                            stateSelect.append('<option value="">Select Governorate</option>');
+
+                            // Sort states alphabetically
+                            response.data.states.sort(function(a, b) {
+                                return a.name.localeCompare(b.name);
+                            });
+
+                            $.each(response.data.states, function (index, state) {
+                                stateSelect.append('<option value="' + state.name + '">' + state.name + '</option>');
+                            });
+                        } else {
+                            stateSelect.append('<option value="">No governorates available</option>');
+                        }
+                    },
+                    error: function () {
+                        stateSelect.empty();
+                        stateSelect.append('<option value="">Error fetching governorates</option>');
+                    }
+                });
+            } else {
+                stateSelect.empty();
+                stateSelect.append('<option value="">Select Governorate</option>');
+            }
+        });
+    });
+</script>
 }
