@@ -22,5 +22,4 @@ public class Room
     public string? ImageUrl { get; set; }
     public DateTime? CreatedDate { get; set; }
     public DateTime? UpdatedDate { get; set; }
-
 }
