@@ -1,0 +1,188 @@
+@model BeachyRooms.Domain.Entities.Room
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+    <div class="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
+        <!-- Card Header -->
+        <div class="flex items-center gap-3 px-8 py-6 border-b">
+            <div class="relative w-9 h-9">
+                <div class="absolute w-6 h-4 bg-teal-400 rounded-t-full transform -rotate-45 -translate-x-1.5 translate-y-1.5 overflow-hidden animate-wave-move"></div>
+                <div class="absolute top-[3px] left-[15.5px] w-[9.5px] h-[9.5px] rounded-full bg-gradient-to-br from-yellow-400 via-yellow-300 to-yellow-500 shadow-md animate-sun-pulse"></div>
+                <span class="absolute top-0 left-[2.5px] text-[22.5px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-orange-500 animate-gradient-text">B</span>
+            </div>
+            <div>
+                <p class="text-2xl font-semibold">Beachy Rooms</p>
+                <p class="text-sm text-gray-500">Edit Room</p>
+            </div>
+        </div>
+        <!-- Divider -->
+        <hr />
+        <!-- Card Body -->
+        <form method="post" class="flex flex-col gap-6 p-8">
+            @Html.HiddenFor(model => model.Id)
+            <!-- Hotel Name -->
+            <div>
+                <label asp-for="HotelName" class="block text-sm font-medium text-gray-700">Hotel Name</label>
+                <input asp-for="HotelName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter hotel name" />
+                <span asp-validation-for="HotelName" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Room Number -->
+            <div>
+                <label asp-for="RoomNumber" class="block text-sm font-medium text-gray-700">Room Number</label>
+                <input asp-for="RoomNumber" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter room number" />
+                <span asp-validation-for="RoomNumber" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Country -->
+            <div>
+                <label asp-for="Country" class="block text-sm font-medium text-gray-700">Country</label>
+                <select asp-for="Country" class="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" id="CountrySelect">
+                    <option value="">Select Country</option>
+                </select>
+                <span asp-validation-for="Country" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Governorate -->
+            <div>
+                <label asp-for="City" class="block text-sm font-medium text-gray-700">Governorate</label>
+                <select asp-for="City" class="mt-1 block w-full rounded-md border-gray-300 bg-white shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" id="StateSelect">
+                    <option value="">Select Governorate</option>
+                </select>
+                <span asp-validation-for="City" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Description -->
+            <div>
+                <label asp-for="Description" class="block text-sm font-medium text-gray-700">Description</label>
+                <textarea asp-for="Description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" rows="4" placeholder="Enter room description"></textarea>
+                <span asp-validation-for="Description" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Price -->
+            <div>
+                <label asp-for="Price" class="block text-sm font-medium text-gray-700">Price per Night</label>
+                <input asp-for="Price" type="number" step="0.01" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter price per night" />
+                <span asp-validation-for="Price" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Square Feet -->
+            <div>
+                <label asp-for="Sqft" class="block text-sm font-medium text-gray-700">Square Feet</label>
+                <input asp-for="Sqft" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter square feet" />
+                <span asp-validation-for="Sqft" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Occupancy -->
+            <div>
+                <label asp-for="Occupancy" class="block text-sm font-medium text-gray-700">Occupancy</label>
+                <input asp-for="Occupancy" type="number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter occupancy" />
+                <span asp-validation-for="Occupancy" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Image URL -->
+            <div>
+                <label asp-for="ImageUrl" class="block text-sm font-medium text-gray-700">Image URL</label>
+                <input asp-for="ImageUrl" type="url" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200" placeholder="Enter image URL" />
+                <span asp-validation-for="ImageUrl" class="text-sm text-red-500"></span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-4 mt-6">
+                <div class="flex gap-4 mt-6">
+                    <button type="submit" class="flex-1 inline-flex justify-center items-center px-6 py-3 bg-blue-600 border border-transparent rounded-md font-semibold text-white hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring focus:ring-blue-200 hover:scale-105">
+                        Save changes
+                    </button>
+                    <a asp-controller="Room" asp-action="Index" class="flex-1 inline-flex justify-center items-center px-6 py-3 bg-gray-600 border border-transparent rounded-md font-semibold text-white hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring focus:ring-gray-200 text-center hover:scale-105">
+                        Cancel
+                    </a>
+                </div>
+            </div>
+        </form>
+        <!-- Divider -->
+        <hr />
+        <!-- Card Footer -->
+        <div class="px-8 py-6 text-center text-sm text-gray-500">
+            &copy; 2023 BeachyRooms. All rights reserved.
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Fetch and populate countries
+            $.get('https://restcountries.com/v3.1/all', function (countries) {
+                var countrySelect = $('#CountrySelect');
+                countrySelect.empty();
+                countrySelect.append('<option value="">Select Country</option>');
+
+                // Sort countries alphabetically
+                countries.sort(function (a, b) {
+                    return a.name.common.localeCompare(b.name.common);
+                });
+
+                $.each(countries, function (index, country) {
+                    var selected = country.name.common === '@Model.Country' ? 'selected' : '';
+                    countrySelect.append('<option value="' + country.name.common + '" ' + selected + '>' + country.name.common + '</option>');
+                });
+
+                // If a country is already selected, trigger the change event to load states
+                if ($('#CountrySelect').val()) {
+                    $('#CountrySelect').trigger('change');
+                }
+            });
+
+            // Fetch states/governorates when a country is selected
+            $('#CountrySelect').change(function () {
+                var countryName = $(this).val();
+                var stateSelect = $('#StateSelect');
+                stateSelect.empty();
+                stateSelect.append('<option value="">Loading governorates...</option>');
+
+                if (countryName) {
+                    $.ajax({
+                        url: 'https://countriesnow.space/api/v0.1/countries/states',
+                        type: 'POST',
+                        data: JSON.stringify({ country: countryName }),
+                        contentType: 'application/json',
+                        success: function (response) {
+                            stateSelect.empty();
+                            if (response && response.data && response.data.states && response.data.states.length > 0) {
+                                stateSelect.append('<option value="">Select Governorate</option>');
+
+                                // Sort states alphabetically
+                                response.data.states.sort(function(a, b) {
+                                    return a.name.localeCompare(b.name);
+                                });
+
+                                $.each(response.data.states, function (index, state) {
+                                    var selected = state.name === '@Model.City' ? 'selected' : '';
+                                    stateSelect.append('<option value="' + state.name + '" ' + selected + '>' + state.name + '</option>');
+                                });
+                            } else {
+                                stateSelect.append('<option value="">No governorates available</option>');
+                            }
+                        },
+                        error: function () {
+                            stateSelect.empty();
+                            stateSelect.append('<option value="">Error fetching governorates</option>');
+                        }
+                    });
+                } else {
+                    stateSelect.empty();
+                    stateSelect.append('<option value="">Select Governorate</option>');
+                }
+            });
+
+            // Set selected country and state if they exist
+            if ('@Model.Country') {
+                $('#CountrySelect').val('@Model.Country');
+                $('#CountrySelect').trigger('change');
+            }
+        });
+    </script>
+}
