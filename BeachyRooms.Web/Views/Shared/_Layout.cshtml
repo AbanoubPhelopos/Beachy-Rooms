@@ -9,65 +9,89 @@
     <link rel="stylesheet" href="~/css/logo.css" asp-append-version="true" />
 </head>
 <body class="bg-gray-100">
+<!-- Navbar -->
 <header class="bg-white shadow-md">
-    <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+        <!-- Navbar Brand -->
+        <div class="flex items-center space-x-2">
             <!-- Logo -->
             <a class="flex items-center space-x-2" asp-area="" asp-controller="Home" asp-action="Index">
-                <div class="logo">
-                    <div class="icon">
-                        <div class="wave"></div>
-                        <div class="sun"></div>
-                        <span class="letter-b">B</span>
-                    </div>
+                <div class="relative w-9 h-9">
+                    <div class="absolute w-6 h-4 bg-teal-400 rounded-t-full transform -rotate-45 -translate-x-1.5 translate-y-1.5 overflow-hidden animate-wave-move"></div>
+                    <div class="absolute top-[3px] left-[15.5px] w-[9.5px] h-[9.5px] rounded-full bg-gradient-to-br from-yellow-400 via-yellow-300 to-yellow-500 shadow-md animate-sun-pulse"></div>
+                    <span class="absolute top-0 left-[2.5px] text-[22.5px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 to-orange-500 animate-gradient-text">B</span>
                 </div>
-                <span class="text-xl font-bold text-gray-800">Beachy Rooms</span>
+                <span class="font-bold text-2xl text-gray-800">Beachy Rooms</span>
             </a>
+        </div>
 
+        <!-- Navbar Content -->
+        <div class="hidden sm:flex sm:items-center sm:space-x-6">
+            <a class="text-gray-800 hover:text-gray-600 font-medium" asp-controller="Room" asp-action="Index">Rooms</a>
+        </div>
+
+        <!-- Navbar Actions -->
+        <div class="flex items-center space-x-4">
+            <a class="hidden lg:block text-gray-800 hover:text-gray-600 font-medium" href="#">Login</a>
+            <a href="#" class="bg-blue-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-blue-700 transition duration-200">Sign Up</a>
             <!-- Mobile Menu Button -->
-            <button class="lg:hidden p-2 text-gray-800 hover:text-gray-600 focus:outline-none" aria-label="Toggle menu">
+            <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-800 hover:text-gray-600 focus:outline-none" aria-label="Toggle menu">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
             </button>
-
-            <!-- Navigation Links -->
-            <div class="hidden lg:flex lg:items-center lg:space-x-6">
-                <a class="text-gray-800 hover:text-gray-600 font-medium" asp-controller="Room" asp-action="Index">Rooms</a>
-                <a class="text-gray-800 hover:text-gray-600 font-medium" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </div>
-
-        <!-- Mobile Menu (Hidden by default) -->
-        <div class="lg:hidden hidden mt-2">
-            <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Room" asp-action="Index">Rooms</a>
-            <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </nav>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden container mx-auto px-4 sm:px-6 lg:px-8">
+        <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Home" asp-action="Index">Home</a>
+        <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Room" asp-action="Index">Rooms</a>
+        <a class="block py-2 text-gray-800 hover:text-gray-600" href="#">Login</a>
+        <a class="block py-2 text-gray-800 hover:text-gray-600" href="#">Sign Up</a>
+        <a class="block py-2 text-gray-800 hover:text-gray-600" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
 </header>
 
+<!-- Main Content -->
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <main role="main">
         @RenderBody()
     </main>
 </div>
 
-<footer class="bg-white border-t border-gray-200 mt-8">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-gray-600">
-        &copy; @DateTime.Now.Year - BeachyRooms.Web -
-        <a class="text-blue-600 hover:text-blue-800" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+<!-- Footer -->
+<footer class="bg-white border-t border-gray-200">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- About Section -->
+            <div>
+                <h3 class="text-gray-800 font-semibold text-lg mb-2">About Us</h3>
+                <p class="text-gray-600 text-sm">
+                    Beachy Rooms provides the best beachfront rooms with stunning views and exceptional service.
+                </p>
+            </div>
+        <div class="text-center text-gray-600 text-sm mt-8">
+            &copy; @DateTime.Now.Year - Beachy Rooms. All rights reserved.
+        </div>
     </div>
 </footer>
 
+<!-- Scripts -->
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 
-<!-- Add JavaScript for mobile menu toggle -->
+<!-- Mobile Menu Toggle Script -->
 <script>
-    document.querySelector('button[aria-label="Toggle menu"]').addEventListener('click', function () {
-        const mobileMenu = document.querySelector('.lg\\:hidden.hidden');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = document.getElementById('menu-icon');
+    const closeIcon = document.getElementById('close-icon');
+
+    mobileMenuButton.addEventListener('click', function() {
         mobileMenu.classList.toggle('hidden');
+        menuIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
     });
 </script>
 </body>
