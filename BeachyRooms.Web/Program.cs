@@ -1,4 +1,6 @@
+using BeachyRooms.Application.Common.Interfaces;
 using BeachyRooms.Infrastructure.Data;
+using BeachyRooms.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>
     (options => options.UseNpgsql(builder.Configuration.GetConnectionString("Default")));
+builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 
 //builder.Services.AddScoped<ApplicationDbContext>();
 

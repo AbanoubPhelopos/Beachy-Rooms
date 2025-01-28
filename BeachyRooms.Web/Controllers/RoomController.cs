@@ -1,3 +1,4 @@
+using BeachyRooms.Application.Common.Interfaces;
 using BeachyRooms.Domain.Entities;
 using BeachyRooms.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -7,24 +8,24 @@ namespace BeachyRooms.Web.Controllers
 {
     public class RoomController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IRoomRepository _roomRepository;
         private readonly ILogger<RoomController> _logger;
 
-        public RoomController(ApplicationDbContext context, ILogger<RoomController> logger)
+        public RoomController(IRoomRepository roomRepository, ILogger<RoomController> logger)
         {
-            _context = context;
+            _roomRepository = roomRepository;
             _logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var rooms = await _context.Rooms.AsNoTracking().ToListAsync();
+            var rooms = await _roomRepository.GetAllAsync();
             return View(rooms);
         }
 
         public async Task<IActionResult> Details(int id)
         {
-            var room = await _context.Rooms.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+            var room = await _roomRepository.GetByIdAsync(id);
             if (room == null)
             {
                 _logger.LogWarning("Details: Room with ID {RoomId} not found.", id);
@@ -53,8 +54,7 @@ namespace BeachyRooms.Web.Controllers
             {
                 try
                 {
-                    _context.Add(room);
-                    await _context.SaveChangesAsync();
+                    await _roomRepository.AddAsync(room);
                     TempData["success"] = "The Room created successfully.";
                     _logger.LogInformation("Create: Room with ID {RoomId} created successfully.", room.Id);
                     return RedirectToAction(nameof(Index));
@@ -69,11 +69,11 @@ namespace BeachyRooms.Web.Controllers
 
             return View(room);
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _roomRepository.GetByIdAsync(id);
             if (room == null)
             {
                 _logger.LogWarning("Edit: Room with ID {RoomId} not found.", id);
@@ -102,8 +102,7 @@ namespace BeachyRooms.Web.Controllers
             {
                 try
                 {
-                    _context.Update(room);
-                    await _context.SaveChangesAsync();
+                    await _roomRepository.UpdateAsync(room);
                     TempData["success"] = "The Room updated successfully.";
                     _logger.LogInformation("Edit: Room with ID {RoomId} updated successfully.", room.Id);
                     return RedirectToAction(nameof(Index));
@@ -111,8 +110,8 @@ namespace BeachyRooms.Web.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     TempData["error"] = "The Room could not be updated.";
-                    if (!RoomExists(room.Id))
-                    { 
+                    if (!await _roomRepository.ExistsAsync(room.Id))
+                    {
                         _logger.LogWarning("Edit: Room with ID {RoomId} not found during update.", room.Id);
                         return NotFound();
                     }
@@ -135,7 +134,7 @@ namespace BeachyRooms.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int id)
         {
-            var room = await _context.Rooms.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
+            var room = await _roomRepository.GetByIdAsync(id);
             if (room == null)
             {
                 _logger.LogWarning("Delete: Room with ID {RoomId} not found.", id);
@@ -149,7 +148,7 @@ namespace BeachyRooms.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _roomRepository.GetByIdAsync(id);
             if (room == null)
             {
                 _logger.LogWarning("DeleteConfirmed: Room with ID {RoomId} not found.", id);
@@ -158,23 +157,18 @@ namespace BeachyRooms.Web.Controllers
 
             try
             {
-                _context.Rooms.Remove(room);
-                await _context.SaveChangesAsync();
+                await _roomRepository.DeleteAsync(room);
                 TempData["success"] = "The Room deleted successfully.";
                 _logger.LogInformation("DeleteConfirmed: Room with ID {RoomId} deleted successfully.", id);
                 return RedirectToAction(nameof(Index));
             }
             catch (DbUpdateException ex)
             {
-                TempData["success"] = "The Room could not be deleted";
+                TempData["error"] = "The Room could not be deleted.";
                 _logger.LogError(ex, "DeleteConfirmed: Error deleting room with ID {RoomId}.", id);
                 ModelState.AddModelError(string.Empty, "An error occurred while deleting the room. Please try again.");
                 return View(room);
             }
-        }
-        private bool RoomExists(int id)
-        {
-            return _context.Rooms.Any(e => e.Id == id);
         }
     }
 }
